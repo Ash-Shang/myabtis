@@ -15,15 +15,28 @@
  */
 package org.apache.ibatis.reflection.property;
 
+import java.lang.reflect.Field;
 import java.util.Iterator;
 
 /**
  * @author Clinton Begin
  */
+
+
 public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
+
+  /**
+   * 当前字符串
+   */
   private String name;
+  /**
+   * 索引的 {@link #name} ，因为 {@link #name} 如果存在 {@link #index} 会被更改
+   */
   private final String indexedName;
   private String index;
+  /**
+   * 剩余字符
+   */
   private final String children;
 
   public PropertyTokenizer(String fullname) {
@@ -31,7 +44,7 @@ public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
     if (delim > -1) {
       name = fullname.substring(0, delim);
       children = fullname.substring(delim + 1);
-    } else {
+    } else {//说明name字符串不包含“.”
       name = fullname;
       children = null;
     }
@@ -59,11 +72,19 @@ public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
     return children;
   }
 
+  /**
+   * 判断是否有下一个元素
+   * @return
+   */
   @Override
   public boolean hasNext() {
     return children != null;
   }
 
+  /**
+   * 迭代获得下一个 PropertyTokenizer 对象
+   * @return
+   */
   @Override
   public PropertyTokenizer next() {
     return new PropertyTokenizer(children);
