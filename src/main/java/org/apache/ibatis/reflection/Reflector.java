@@ -551,6 +551,11 @@ public class Reflector {
    * @param propertyName - the name of the property
    * @return The Class of the property getter
    */
+  /**
+   * 获得指定属性的 getting 方法的返回值的类型
+   * @param propertyName the name of the property
+   * @return
+   */
   public Class<?> getGetterType(String propertyName) {
     Class<?> clazz = getTypes.get(propertyName);
     if (clazz == null) {
